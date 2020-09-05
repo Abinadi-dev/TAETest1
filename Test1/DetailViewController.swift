@@ -9,22 +9,27 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-
+    
+    var tableView: UITableView?
+    var content: String?
+    var delegate: DetailViewControllerDelegate?
+    
+    @IBOutlet weak var textField: UITextField!
+    
+    @IBAction func saveValue(_ sender: Any) {
+        self.content = self.textField.text
+        if let content = self.textField.text {
+            self.delegate?.updateContent(with: content, tableView! )
+        }
+        self.navigationController?.popViewController(animated: true)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.textField.text = self.content
 
-        // Do any additional setup after loading the view.
     }
-    
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+protocol DetailViewControllerDelegate {
+  func updateContent(with content: String, _ tableView: UITableView)
 }
